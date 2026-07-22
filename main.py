@@ -6,12 +6,36 @@ lookup1 = requests.get("https://internetdb.shodan.io/"+ip).json()
 print("ip:" + lookup1["ip"])
 print("open ports:")
 for port in lookup1["ports"]:
-    print(port)
-
+    if port == 80:
+        print("80   HTTP")
+    if port == 443:
+        print("443  HTTPS")
+    if port == 20:
+        print("20   FTP")
+    if port == 21:
+        print("21   FTP")
+    if port == 22:
+        print("22   SSH/SFTP")
+    if port == 25:
+        print("25   SMTP")
+    if port == 110:
+        print("110  POP3")
+    if port == 143:
+        print("143  IMAP")
+    if port == 53:
+        print("53   DNS")
+    if port == 123:
+        print("123  NTP")
+    if port == 3389:
+        print("3389 RDP")
+    if port == 23:
+        print("23   Telenet")
+    else:
+        print(port)
 print("detected vulnerability:")
 for vuln in lookup1['vulns']:
     print(vuln)
 
-print("tags:")
+print("tags")
 for tag in lookup1["tags"]:
     print(tag)
