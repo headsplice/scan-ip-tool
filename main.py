@@ -60,7 +60,15 @@ if ipordomain == "ip":
 
 if ipordomain == "domain":
     whoisrequest = whois.whois(url)
-    print("register: "+whoisrequest.registrar)
+    try:
+        print("register: "+whoisrequest.get("registrar_name"))
+    except:
+        pass
+    nameserverobject = whoisrequest.get("name_servers")
+    print("name servers: ")
+    for server in whoisrequest.name_servers:
+        print(" "+ server)
+    
     ip = socket.gethostbyname(url)
     lookup1 = requests.get("https://internetdb.shodan.io/"+ip).json()
     print("ip: " + lookup1["ip"])
@@ -108,3 +116,12 @@ if ipordomain == "domain":
     print("city:    " + geolocationdetails.city)
     print("region:  " + geolocationdetails.region)
     print("country: " + geolocationdetails.country)
+    try:
+        print("address: "+ whoisrequest.get("address"))
+    except:
+        print("address search blocked by WHOIS privacy services")
+
+    try:
+        print("emails: "+ whoisrequest.get("emails"))
+    except:
+        print("email search blocked by WHOIS privacy services")
