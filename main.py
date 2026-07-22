@@ -1,5 +1,5 @@
-import requests, sys, json
-
+import requests, sys, json,ipinfo
+ipinfoapikey = "1dec8e07da0bfd"
 ip = sys.argv[1]
 
 lookup1 = requests.get("https://internetdb.shodan.io/"+ip).json()
@@ -39,3 +39,10 @@ for vuln in lookup1['vulns']:
 print("tags")
 for tag in lookup1["tags"]:
     print(tag)
+
+handler = ipinfo.getHandler(ipinfoapikey)
+
+geolocationdetails = handler.getDetails(ip)
+print("city:    " + geolocationdetails.city)
+print("region:  " + geolocationdetails.region)
+print("country: " + geolocationdetails.country)
