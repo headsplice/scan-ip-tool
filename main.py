@@ -1,5 +1,5 @@
 import requests, sys, json,ipinfo
-ipinfoapikey = "1dec8e07da0bfd"
+ipinfoapikey = 
 ip = sys.argv[1]
 
 lookup1 = requests.get("https://internetdb.shodan.io/"+ip).json()
