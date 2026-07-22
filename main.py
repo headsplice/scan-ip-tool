@@ -1,5 +1,5 @@
-import requests, sys, json,ipinfo,whois,ipaddress
-ipinfoapikey = "1dec8e07da0bfd"
+import requests, sys, json,ipinfo,whois,ipaddress,os
+ipinfoapikey = os.environ.get("IPINFOAPIKEY")
 url = sys.argv[1]
 
 try:
@@ -57,4 +57,6 @@ if ipordomain == "ip":
     print("country: " + geolocationdetails.country)
 if ipordomain == "domain":
     whoisrequest = whois.whois(url)
+    print("register: "+whoisrequest.registrar)
+
 
