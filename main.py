@@ -1,17 +1,24 @@
-import requests, sys, json,ipinfo
-ipinfoapikey = 
-ip = sys.argv[1]
+import requests, sys, json,ipinfo,whois,ipaddress
+ipinfoapikey = "1dec8e07da0bfd"
+url = sys.argv[1]
 
-lookup1 = requests.get("https://internetdb.shodan.io/"+ip).json()
-print("ip: " + lookup1["ip"])
-print("cpes:")
-for cpe in lookup1['cpes']:
-    print(" "+ cpe)
-for port in lookup1["ports"]:
-    if port == 80:
-        print("80   HTTP")
-    if port == 443:
-        print("443  HTTPS")
+try:
+    if url == str(ipaddress.ip_address(url)):
+        ipordomain = "ip"
+except ValueError:
+    ipordomain = "domain"
+
+if ipordomain == "ip":
+    lookup1 = requests.get("https://internetdb.shodan.io/"+url).json()
+    print("ip: " + lookup1["ip"])
+    print("cpes:")
+    for cpe in lookup1['cpes']:
+        print(" "+ cpe)
+    for port in lookup1["ports"]:
+        if port == 80:
+            print("80   HTTP")
+        if port == 443:
+            print("443  HTTPS")
     if port == 20:
         print("20   FTP")
     if port == 21:
@@ -34,17 +41,20 @@ for port in lookup1["ports"]:
         print("23   Telenet")
     else:
         print(port)
-print("detected vulnerability:")
-for vuln in lookup1['vulns']:
-    print(vuln)
+    print("detected vulnerability:")
+    for vuln in lookup1['vulns']:
+        print(vuln)
 
-print("tags:")
-for tag in lookup1["tags"]:
-    print(tag)
+    print("tags:")
+    for tag in lookup1["tags"]:
+        print(tag)
 
-handler = ipinfo.getHandler(ipinfoapikey)
+    handler = ipinfo.getHandler(ipinfoapikey)
 
-geolocationdetails = handler.getDetails(ip)
-print("city:    " + geolocationdetails.city)
-print("region:  " + geolocationdetails.region)
-print("country: " + geolocationdetails.country)
+    geolocationdetails = handler.getDetails(url)
+    print("city:    " + geolocationdetails.city)
+    print("region:  " + geolocationdetails.region)
+    print("country: " + geolocationdetails.country)
+if ipordomain == "domain":
+    whoisrequest = whois.whois(url)
+
