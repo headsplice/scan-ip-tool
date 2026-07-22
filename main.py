@@ -66,9 +66,11 @@ if ipordomain == "domain":
         pass
     nameserverobject = whoisrequest.get("name_servers")
     print("name servers: ")
-    for server in whoisrequest.name_servers:
-        print(" "+ server)
-    
+    try:
+        for server in whoisrequest.name_servers:
+            print(" "+ server)
+    except:
+        pass
     ip = socket.gethostbyname(url)
     lookup1 = requests.get("https://internetdb.shodan.io/"+ip).json()
     print("ip: " + lookup1["ip"])
