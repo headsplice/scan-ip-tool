@@ -3,8 +3,10 @@ ipinfoapikey =
 ip = sys.argv[1]
 
 lookup1 = requests.get("https://internetdb.shodan.io/"+ip).json()
-print("ip:" + lookup1["ip"])
-print("open ports:")
+print("ip: " + lookup1["ip"])
+print("cpes:")
+for cpe in lookup1['cpes']:
+    print(" "+ cpe)
 for port in lookup1["ports"]:
     if port == 80:
         print("80   HTTP")
@@ -36,7 +38,7 @@ print("detected vulnerability:")
 for vuln in lookup1['vulns']:
     print(vuln)
 
-print("tags")
+print("tags:")
 for tag in lookup1["tags"]:
     print(tag)
 
